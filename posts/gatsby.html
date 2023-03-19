@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Muthu Palaniappan">
-<meta name="dcterms.date" content="2023-03-17">
-<meta name="description" content="Final Project">
+<meta name="dcterms.date" content="2023-03-19">
+<meta name="description" content="An Analysis on The Great Gatsby">
 
-<title>myblog - Gatsby</title>
+<title>myblog - DH 140 Final Project</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -172,10 +172,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Gatsby</h1>
+      <h1 class="title">DH 140 Final Project</h1>
                   <div>
         <div class="description">
-          Final Project
+          An Analysis on The Great Gatsby
         </div>
       </div>
                 </div>
@@ -194,14 +194,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 17, 2023</p>
+        <p class="date">March 19, 2023</p>
       </div>
     </div>
     
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">March 17, 2023</p>
+        <p class="date-modified">March 6, 2023</p>
       </div>
     </div>
       
@@ -224,23 +224,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="an-analysis-of-f.-scott-fitzgeralds-the-great-gatsby">An Analysis of F. Scott Fitzgerald’s <em>The Great Gatsby</em></h2>
 <section id="muthu-palaniappan-winter-2023" class="level4">
 <h4 class="anchored" data-anchor-id="muthu-palaniappan-winter-2023">Muthu Palaniappan, Winter 2023</h4>
-<p>This should include a description of your data, a link to the source(s) of your data, your motivation for looking at the data, and the question(s) that you are seeking to address. For my final project, I will be analyzing the novel <em>The Great Gatsby</em> by F. Scott Fitzgerald. The <a href="https://www.gutenberg.org/cache/epub/64317/pg64317.txt">source</a> for my project is The Gutenberg Project, which has provided the text of the novel.</p>
-<p>Fitzgerald’s <em>The Great Gatsby</em> is my favorite novel, and I first read it in a high school English class. I was enamored by the themes of love and the American dream as well as the lively setting and time period. During my first read of the book, I analyzed the texts from a literary standpoint. Now, I hope to perform the same analysis from a digital humanities perspective using data science. I would like to explore the themes of the novel by analyzing word frequencies and sentiment. I also plan to look into the role certain characters play in portraying themes of the Roaring Twenties.</p>
+</section>
+<section id="section" class="level4">
+<h4 class="anchored" data-anchor-id="section">3/18/22</h4>
+</section>
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+<p>For my final project, I will be analyzing the novel <em>The Great Gatsby</em> by F. Scott Fitzgerald. The <a href="https://www.gutenberg.org/cache/epub/64317/pg64317.txt">source</a> for my project is The Gutenberg Project, which has provided the text of the novel.</p>
+<p>Fitzgerald’s <em>The Great Gatsby</em> is my favorite novel, and I first read it in a high school English class. I was enamored by the themes of love and the American dream as well as the lively setting and time period. During my first read of the book, I analyzed the texts from a literary standpoint. Now, I hope to perform a literary analysis from a statistical point of view. Using the raw text of the novel, I ask “What are the overal moods and themes of the novel?” and “How does the sentiment of the novel reflect the historical time period that it was set in?”</p>
+</section>
+<section id="methods" class="level3">
+<h3 class="anchored" data-anchor-id="methods">Methods</h3>
+<section id="data-processing-and-analytical-process" class="level4">
+<h4 class="anchored" data-anchor-id="data-processing-and-analytical-process">Data Processing and Analytical Process</h4>
+<p>As stated earlier, my dataset is the raw text of <em>The Great Gatsby</em> provided by Project Gutenberg. The first step in my data processing was to capture and store the text of the novel. I used the Python <code>requests</code> library, which allows us to use a target url and extract the text from the webpage. Project Gutenberg stores the text in a textfile format, so this was straightforward. From there, I did some simple processing like lowering the case of all of the letters and removing the Project Gutenberg text additions to the page. What remained was one long string with the text of <em>The Great Gatsby</em>. Using this string, I created a Python list where each element is a word from the string.</p>
+<p>Stopwords are a list of words that are commonly filtered out before natural language processing since they are insignificant. Example stopwords are “are”, “is”, “the”, and “the”. The Python Natural Language Tool Kit provides a list of stopwords for a specified language. So, anytime I was processing the words from the Novel and testing their sentiment/frequencies, I filtered out stopwords.</p>
+<p>Fitzgerald divided his novel into 9 chapters, and the chapters are titled as roman numerals in the text. I decided to split up the string of words into 9 separate strings corresponding to each chapter so I could compare them.</p>
+<p>Using the list of all words in the novel and the 9 lists of words in each chapter, minus the stop words, I performed my data analysis. I used the Vader sentiment analyzer, the word frequencies, the positive/negative word lexicon, and the Porter Stemmer to draw various conclusions and make comparisons.</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.tokenize <span class="im">import</span> word_tokenize</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.sentiment <span class="im">import</span> vader</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.corpus <span class="im">import</span> stopwords</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.corpus <span class="im">import</span> opinion_lexicon</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.stem.porter <span class="im">import</span> PorterStemmer</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'punkt'</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'stopwords'</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'vader_lexicon'</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'opinion_lexicon'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.tokenize <span class="im">import</span> word_tokenize</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.sentiment <span class="im">import</span> vader</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.corpus <span class="im">import</span> stopwords</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.corpus <span class="im">import</span> opinion_lexicon</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.stem.porter <span class="im">import</span> PorterStemmer</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'punkt'</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'stopwords'</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'vader_lexicon'</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'opinion_lexicon'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>[nltk_data] Downloading package punkt to /home/jovyan/nltk_data...
 [nltk_data]   Package punkt is already up-to-date!
@@ -265,15 +282,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>gatsby_string <span class="op">=</span> gatsby_string.split(<span class="st">'*** END OF THE PROJECT GUTENBERG EBOOK THE GREAT GATSBY ***'</span>)[<span class="dv">0</span>]</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>gatsby_string <span class="op">=</span> gatsby_string.lower()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>stopwords_list <span class="op">=</span> stopwords.words(<span class="st">'english'</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># print(stopwords_list)</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>sia <span class="op">=</span> vader.SentimentIntensityAnalyzer()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sia <span class="op">=</span> vader.SentimentIntensityAnalyzer()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>gatsby_word_list <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> word_tokenize(gatsby_string.lower())]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>reviewPolarity <span class="op">=</span> <span class="fl">0.0</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pos_list <span class="op">=</span> []</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>neg_list <span class="op">=</span> []</span>
@@ -290,7 +306,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ['cry', 'vulnerable', 'criticizing', 'victim', 'bores', 'accused', 'hostile', 'missing', 'forget', 'snobbishly']</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>top15_pos <span class="op">=</span> nltk.FreqDist(pos_list).most_common(<span class="dv">15</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>top15_neg <span class="op">=</span> nltk.FreqDist(neg_list).most_common(<span class="dv">15</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -301,7 +317,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 [('no', 97), ('miss', 38), ('cried', 31), ('alone', 25), ('demanded', 24), ('broke', 23), ('stopped', 19), ('hard', 17), ('shook', 17), ('crazy', 14), ('stop', 13), ('bad', 11), ('leave', 11), ('lost', 11), ('killed', 11)]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>no_stopwords <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> word_tokenize(gatsby_string.lower()) <span class="cf">if</span> w <span class="kw">not</span> <span class="kw">in</span> stopwords_list]</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>reviewPolarity <span class="op">=</span> <span class="fl">0.0</span></span>
@@ -323,7 +339,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 [('miss', 38), ('cried', 31), ('alone', 25), ('demanded', 24), ('broke', 23), ('stopped', 19), ('hard', 17), ('shook', 17), ('crazy', 14), ('stop', 13), ('bad', 11), ('leave', 11), ('lost', 11), ('killed', 11), ('dead', 11)]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="9">
+</section>
+</section>
+<section id="results-for-top-positivenegative-words-using-raw-polarity-score" class="level3">
+<h3 class="anchored" data-anchor-id="results-for-top-positivenegative-words-using-raw-polarity-score">Results for Top Positive/Negative Words using Raw Polarity Score</h3>
+<p>In the above section I determined what the 15 most frequent positively conotated and negatively conotated words in the novel. First, I separated the words in the novel by polarity scores, negative indicating a negative sentiment and positive indicating a positive sentiment. From there, I used the frequency distributor from NLTK to return the top 15 in each category. I did this twice, once with stop words and once with stop words removed. The results from the two iterations were nearly the same, with the only stop word in the first iteration of positive words being “won”, and the only stop word in the negative list being “no”. The top 15 positive and negative words are outputted above.</p>
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>stemmer <span class="op">=</span> PorterStemmer()</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>unstemmed <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> word_tokenize(gatsby_string.lower()) <span class="cf">if</span> w <span class="kw">not</span> <span class="kw">in</span> stopwords_list]</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>stemmed <span class="op">=</span> []</span>
@@ -349,7 +370,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 [('miss', 42), ('stop', 35), ('demand', 28), ('broke', 23), ('hard', 17), ('shook', 17), ('drop', 14), ('kill', 12), ('bad', 11), ('lost', 11), ('dead', 11), ('forget', 10), ('low', 10), ('violent', 10), ('interrupt', 10)]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="17">
+</section>
+<section id="results-for-top-positivenegative-words-using-raw-polarity-score-and-porter-stemmer" class="level3">
+<h3 class="anchored" data-anchor-id="results-for-top-positivenegative-words-using-raw-polarity-score-and-porter-stemmer">Results for Top Positive/Negative Words using Raw Polarity Score and Porter Stemmer</h3>
+<p>In this section above, I did a nearly identical analysis as the prior section. The only difference this time around was that I used stemmed words instead of the raw word. From their documentation, the Porter Stemmer “removed the commoner morphological and inflexional endings from words in English.” For example, the words “lover”, “lovely”, and “loved” would all boil down to the stem “love”. After this analysis, I noticed slightly different results than before. For instance in the positive word list, “love” is more frequent after being stemmed, and “smile” and “care” made it onto the list after being stemmed. In the negative word list, “stop” moved up in frequency after being stemmed.</p>
+<p>The results were not wildly different after being stemmed, but it was interesting to notice the slight change.</p>
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>first_ch_string <span class="op">=</span> <span class="st">'In my younger and more vulnerable years'</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>second_ch_string <span class="op">=</span><span class="st">'About halfway between West Egg and New York the motor road hastily'</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>third_ch_string <span class="op">=</span><span class="st">'There was music from my neighbour’s house through the summer nights.'</span></span>
@@ -368,94 +394,131 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>sixth_ch_index <span class="op">=</span> gatsby_string.find(sixth_ch_string.lower())</span>
 <span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>seventh_ch_index <span class="op">=</span> gatsby_string.find(seventh_ch_string.lower())</span>
 <span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>eighth_ch_index <span class="op">=</span> gatsby_string.find(eighth_ch_string.lower())</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>ninth_ch_index <span class="op">=</span> gatsby_string.find(ninth_ch_string.lower())</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(first_ch_index)</span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(second_ch_index)</span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(third_ch_index)</span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fourth_ch_index)</span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fifth_ch_index)</span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sixth_ch_index)</span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(seventh_ch_index)</span>
-<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(eighth_ch_index)</span>
-<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ninth_ch_index)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>531
-34325
-58543
-91906
-123277
-147460
-170873
-221476
-247570</code></pre>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>ninth_ch_index <span class="op">=</span> gatsby_string.find(ninth_ch_string.lower())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>score_arr <span class="op">=</span> []</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>gatsby_sections <span class="op">=</span> []</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>gatsby_sections.append(gatsby_string[first_ch_index:second_ch_index])</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>gatsby_sections.append(gatsby_string[second_ch_index:third_ch_index])</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>gatsby_sections.append(gatsby_string[third_ch_index:fourth_ch_index])</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>gatsby_sections.append(gatsby_string[fourth_ch_index:fifth_ch_index])</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>gatsby_sections.append(gatsby_string[fifth_ch_index:sixth_ch_index])</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>gatsby_sections.append(gatsby_string[sixth_ch_index:seventh_ch_index])</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>gatsby_sections.append(gatsby_string[seventh_ch_index:eighth_ch_index])</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>gatsby_sections.append(gatsby_string[eighth_ch_index:ninth_ch_index])</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>gatsby_sections.append(gatsby_string[ninth_ch_index:])</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> section <span class="kw">in</span> gatsby_sections:</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  section_list <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> word_tokenize(section.lower()) <span class="cf">if</span> w <span class="kw">not</span> <span class="kw">in</span> stopwords_list]</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  score <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> word <span class="kw">in</span> section_list:</span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    val <span class="op">=</span> sia.polarity_scores(word)[<span class="st">'compound'</span>]</span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    score <span class="op">+=</span> val</span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>  score_arr.append(score)</span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>x_coordinate <span class="op">=</span> [ <span class="dv">1</span><span class="op">+</span>i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(score_arr)) ]</span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Sentiment of the Sections of Gatsby'</span>)</span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>plt.bar(x_coordinate, score_arr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="18">
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>score_arr <span class="op">=</span> []</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>gatsby_sections <span class="op">=</span> []</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>gatsby_sections.append(gatsby_string[first_ch_index:second_ch_index])</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>gatsby_sections.append(gatsby_string[second_ch_index:third_ch_index])</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>gatsby_sections.append(gatsby_string[third_ch_index:fourth_ch_index])</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>gatsby_sections.append(gatsby_string[fourth_ch_index:fifth_ch_index])</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>gatsby_sections.append(gatsby_string[fifth_ch_index:sixth_ch_index])</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>gatsby_sections.append(gatsby_string[sixth_ch_index:seventh_ch_index])</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>gatsby_sections.append(gatsby_string[seventh_ch_index:eighth_ch_index])</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>gatsby_sections.append(gatsby_string[eighth_ch_index:ninth_ch_index])</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>gatsby_sections.append(gatsby_string[ninth_ch_index:])</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>pos_score_per_section <span class="op">=</span> [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>]</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>neg_score_per_section <span class="op">=</span> [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>]</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>section_scatters <span class="op">=</span> []</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> section <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(gatsby_sections)):</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>  section_list <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> word_tokenize(gatsby_sections[section].lower()) <span class="cf">if</span> w <span class="kw">not</span> <span class="kw">in</span> stopwords_list]</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>  section_points <span class="op">=</span> []</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>  score <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>  pos_val <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>  neg_val <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> word <span class="kw">in</span> section_list:</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    val <span class="op">=</span> sia.polarity_scores(word)[<span class="st">'compound'</span>]</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    score <span class="op">+=</span> val</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (val <span class="op">&gt;=</span> <span class="dv">0</span>):</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>      pos_val <span class="op">+=</span> val</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>      neg_val <span class="op">+=</span> val</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> val <span class="op">!=</span> <span class="dv">0</span>:</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>      section_points.append(val)</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>  pos_score_per_section[section] <span class="op">=</span> pos_val</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>  neg_score_per_section[section] <span class="op">=</span> neg_val<span class="op">*-</span><span class="dv">1</span></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>  section_scatters.append(section_points)</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>  score_arr.append(score)</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>x_coordinate <span class="op">=</span> [ <span class="dv">1</span><span class="op">+</span>i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(score_arr)) ]</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Sentiment of the Sections of Gatsby'</span>)</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>plt.bar(x_coordinate, score_arr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>&lt;BarContainer object of 9 artists&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="gatsby_files/figure-html/cell-11-output-2.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-execution_count="19">
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>pos_series <span class="op">=</span> pd.Series(pos_score_per_section, index<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>])</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>neg_series <span class="op">=</span> pd.Series(neg_score_per_section, index<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>])</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">"positive"</span>:pos_score_per_section,<span class="st">"negative"</span>:neg_score_per_section})</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.plot.bar(color<span class="op">=</span>[<span class="st">"Green"</span>,<span class="st">"Red"</span>], rot<span class="op">=</span><span class="dv">0</span>, title<span class="op">=</span><span class="st">"Balance of Positve and Negative Words in Each Section"</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"chapter"</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"score"</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_major_formatter(plt.FixedFormatter([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>]))</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="gatsby_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="results-for-sentiment-in-each-section-based-on-raw-score" class="level3">
+<h3 class="anchored" data-anchor-id="results-for-sentiment-in-each-section-based-on-raw-score">Results for Sentiment in each Section based on Raw Score</h3>
+<p>Above, I calculated the positivity score and negativity score of each chapter of the novel. The first graph with single bars uses a single score for each section. Positive and negative sentiment scores for each word in the section are added to a sum and plotted. In the second graph with double bars, I kept separate counts for the positive score and negative score for each chapter. Both are important representations, but I think that the double bar graph allows us to visualize the balance of positive to negative words in each chapter.</p>
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>positive_words <span class="op">=</span> <span class="bu">set</span>(opinion_lexicon.positive())</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>negative_words <span class="op">=</span> <span class="bu">set</span>(opinion_lexicon.negative())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="21">
+<div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>score_arr <span class="op">=</span> []</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> section <span class="kw">in</span> gatsby_sections:</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  section_list <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> word_tokenize(section.lower()) <span class="cf">if</span> w <span class="kw">not</span> <span class="kw">in</span> stopwords_list]</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  score <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> word <span class="kw">in</span> section_list:</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> word <span class="kw">in</span> positive_words:</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>      score <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> word <span class="kw">in</span> negative_words:</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>      score <span class="op">-=</span> <span class="dv">1</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  score_arr.append(score)</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>x_coordinate <span class="op">=</span> [ <span class="dv">1</span><span class="op">+</span>i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(score_arr)) ]</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Alternate Plot of Section Sentiment'</span>) </span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>plt.bar(x_coordinate, score_arr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="21">
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>pos_score_per_section <span class="op">=</span> [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>]</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>neg_score_per_section <span class="op">=</span> [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>]</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> section <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(gatsby_sections)):</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  section_list <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> word_tokenize(gatsby_sections[section].lower()) <span class="cf">if</span> w <span class="kw">not</span> <span class="kw">in</span> stopwords_list]</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  score <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  pos_val <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  neg_val <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> word <span class="kw">in</span> section_list:</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> word <span class="kw">in</span> positive_words:</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>      score <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>      pos_val <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> word <span class="kw">in</span> negative_words:</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>      score <span class="op">-=</span> <span class="dv">1</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>      neg_val <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>  pos_score_per_section[section] <span class="op">=</span> pos_val</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>  neg_score_per_section[section] <span class="op">=</span> neg_val</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>  score_arr.append(score)</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>x_coordinate <span class="op">=</span> [ <span class="dv">1</span><span class="op">+</span>i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(score_arr)) ]</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Alternate Plot of Section Sentiment'</span>) </span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>plt.bar(x_coordinate, score_arr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>&lt;BarContainer object of 9 artists&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="gatsby_files/figure-html/cell-13-output-2.png" class="img-fluid"></p>
+<p><img src="gatsby_files/figure-html/cell-14-output-2.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> word_tokenize(gatsby_string.lower()) <span class="cf">if</span> w <span class="kw">not</span> <span class="kw">in</span> stopwords_list]</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">'words'</span>: nltk.FreqDist(x).keys(),</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                   <span class="st">'frequencies'</span>: nltk.FreqDist(x).values()})    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pos_series <span class="op">=</span> pd.Series(pos_score_per_section, index<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>])</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>neg_series <span class="op">=</span> pd.Series(neg_score_per_section, index<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>])</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">"positive"</span>:pos_score_per_section,<span class="st">"negative"</span>:neg_score_per_section})</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.plot.bar(color<span class="op">=</span>[<span class="st">"Green"</span>,<span class="st">"Red"</span>], rot<span class="op">=</span><span class="dv">0</span>, title<span class="op">=</span><span class="st">"Alternate Balance of Positve and Negative Words in Each Section"</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"chapter"</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"score"</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_major_formatter(plt.FixedFormatter([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>]))</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="gatsby_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
 </div>
-<div class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="24">
+</div>
+</section>
+<section id="results-for-sentiment-in-each-section-based-on-normalized-score" class="level3">
+<h3 class="anchored" data-anchor-id="results-for-sentiment-in-each-section-based-on-normalized-score">Results for Sentiment in each Section based on Normalized Score</h3>
+<p>Similar to the prior section, I plotted the sentiment scores for each section, but I calculated the scores differently. This time, instead of summing up the raw sentiment score, which is a decimal, I added one for a positive score (anything above zero) and subtracted 1 for a negative score (anything below zero). This normalizes the sentiment for each word, and allows us to view the balance of positive and negative words in regards to their frequencies as opposed to how positive or negative they are. The results are fairly different than the prior section, which is an interesting juxtaposition.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> word_tokenize(gatsby_string.lower()) <span class="cf">if</span> w <span class="kw">not</span> <span class="kw">in</span> stopwords_list <span class="kw">and</span> w.isalnum()]</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">'words'</span>: nltk.FreqDist(x).keys(),</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                   <span class="st">'frequencies'</span>: nltk.FreqDist(x).values()})    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
 
 <div>
 
@@ -480,92 +543,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </tr>
     <tr>
       <th>2</th>
-      <td>f.</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>3</th>
       <td>scott</td>
       <td>1</td>
     </tr>
     <tr>
-      <th>4</th>
+      <th>3</th>
       <td>fitzgerald</td>
       <td>1</td>
     </tr>
-  </tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="cell" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>names <span class="op">=</span> [<span class="st">'gatsby'</span>, <span class="st">'nick'</span>, <span class="st">'daisy'</span>, <span class="st">'tom'</span>, <span class="st">'myrtle'</span>]</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df[df["words"] in names]</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>names_df <span class="op">=</span> df.loc[df[<span class="st">'words'</span>].isin(names)]</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>names_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="30">
-
-<div>
-
-<table class="dataframe table table-sm table-striped">
-  <thead>
     <tr>
-      <th></th>
-      <th>words</th>
-      <th>frequencies</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>gatsby</td>
-      <td>251</td>
-    </tr>
-    <tr>
-      <th>590</th>
-      <td>tom</td>
-      <td>188</td>
-    </tr>
-    <tr>
-      <th>592</th>
-      <td>daisy</td>
-      <td>183</td>
-    </tr>
-    <tr>
-      <th>974</th>
-      <td>nick</td>
-      <td>24</td>
-    </tr>
-    <tr>
-      <th>1954</th>
-      <td>myrtle</td>
-      <td>23</td>
+      <th>4</th>
+      <td>table</td>
+      <td>31</td>
     </tr>
   </tbody>
 </table>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="34">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>names_df.plot.bar(x<span class="op">=</span><span class="st">'words'</span>, y<span class="op">=</span><span class="st">'frequencies'</span>, rot<span class="op">=</span><span class="dv">0</span>, title<span class="op">=</span><span class="st">'Frequencies of Character Names'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="34">
-<pre><code>&lt;AxesSubplot: title={'center': 'Frequencies of Character Names'}, xlabel='words'&gt;</code></pre>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.describe())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       frequencies
+count  5483.000000
+mean      4.053073
+std      10.400495
+min       1.000000
+25%       1.000000
+50%       1.000000
+75%       3.000000
+max     251.000000</code></pre>
 </div>
-<div class="cell-output cell-output-display">
-<p><img src="gatsby_files/figure-html/cell-17-output-2.png" class="img-fluid"></p>
+</div>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>top_10_words <span class="op">=</span> df.nlargest(<span class="dv">10</span>, <span class="st">'frequencies'</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(top_10_words)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      words  frequencies
+1    gatsby          251
+298    said          233
+547     tom          188
+549   daisy          183
+184     one          145
+40     like          119
+79     came          108
+147    back          107
+118  little          103
+164     man           98</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="43">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>top10_pos_words <span class="op">=</span> []</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>top10_neg_words <span class="op">=</span> []</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    top10_pos_words.append(top15_pos[i][<span class="dv">0</span>])</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    top10_neg_words.append(top15_neg[i][<span class="dv">0</span>])</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>pos_df <span class="op">=</span> df.loc[df[<span class="st">'words'</span>].isin(top10_pos_words)]</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>pos_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="43">
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>top10_pos_words <span class="op">=</span> []</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>top10_neg_words <span class="op">=</span> []</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    top10_pos_words.append(top15_pos[i][<span class="dv">0</span>])</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    top10_neg_words.append(top15_neg[i][<span class="dv">0</span>])</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>pos_df <span class="op">=</span> df.loc[df[<span class="st">'words'</span>].isin(top10_pos_words)]</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>pos_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
 
 <div>
 
@@ -584,22 +620,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <td>26</td>
     </tr>
     <tr>
-      <th>50</th>
+      <th>40</th>
       <td>like</td>
       <td>119</td>
     </tr>
     <tr>
-      <th>126</th>
+      <th>114</th>
       <td>matter</td>
       <td>19</td>
     </tr>
     <tr>
-      <th>769</th>
+      <th>713</th>
       <td>hand</td>
       <td>63</td>
     </tr>
     <tr>
-      <th>880</th>
+      <th>816</th>
       <td>laugh</td>
       <td>9</td>
     </tr>
@@ -608,10 +644,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="44">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>neg_df <span class="op">=</span> df.loc[df[<span class="st">'words'</span>].isin(top10_neg_words)]</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>neg_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="44">
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>neg_df <span class="op">=</span> df.loc[df[<span class="st">'words'</span>].isin(top10_neg_words)]</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>neg_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
 
 <div>
 
@@ -625,27 +661,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </thead>
   <tbody>
     <tr>
-      <th>152</th>
+      <th>140</th>
       <td>hard</td>
       <td>17</td>
     </tr>
     <tr>
-      <th>899</th>
+      <th>831</th>
       <td>miss</td>
       <td>38</td>
     </tr>
     <tr>
-      <th>1020</th>
+      <th>939</th>
       <td>drop</td>
       <td>4</td>
     </tr>
     <tr>
-      <th>1149</th>
+      <th>1055</th>
       <td>broke</td>
       <td>23</td>
     </tr>
     <tr>
-      <th>1225</th>
+      <th>1121</th>
       <td>bad</td>
       <td>11</td>
     </tr>
@@ -654,32 +690,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="45">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>pos_df.plot.bar(x<span class="op">=</span><span class="st">'words'</span>, y<span class="op">=</span><span class="st">'frequencies'</span>, rot<span class="op">=</span><span class="dv">0</span>, title<span class="op">=</span><span class="st">'Frequencies of Top 10 Positive Words'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="45">
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>pos_df.plot.bar(x<span class="op">=</span><span class="st">'words'</span>, y<span class="op">=</span><span class="st">'frequencies'</span>, rot<span class="op">=</span><span class="dv">0</span>, title<span class="op">=</span><span class="st">'Frequencies of Top 10 Positive Words'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
 <pre><code>&lt;AxesSubplot: title={'center': 'Frequencies of Top 10 Positive Words'}, xlabel='words'&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="gatsby_files/figure-html/cell-20-output-2.png" class="img-fluid"></p>
+<p><img src="gatsby_files/figure-html/cell-23-output-2.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-execution_count="46">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>neg_df.plot.bar(x<span class="op">=</span><span class="st">'words'</span>, y<span class="op">=</span><span class="st">'frequencies'</span>, rot<span class="op">=</span><span class="dv">0</span>, title<span class="op">=</span><span class="st">'Frequencies of Top 10 Negative Words'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="46">
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>neg_df.plot.bar(x<span class="op">=</span><span class="st">'words'</span>, y<span class="op">=</span><span class="st">'frequencies'</span>, rot<span class="op">=</span><span class="dv">0</span>, title<span class="op">=</span><span class="st">'Frequencies of Top 10 Negative Words'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
 <pre><code>&lt;AxesSubplot: title={'center': 'Frequencies of Top 10 Negative Words'}, xlabel='words'&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="gatsby_files/figure-html/cell-21-output-2.png" class="img-fluid"></p>
+<p><img src="gatsby_files/figure-html/cell-24-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
+<section id="results-for-word-frequency-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="results-for-word-frequency-analysis">Results for Word Frequency Analysis</h3>
+<p>In this section, I looked into the word frequencies in the novel. There are over 5000 unique words in the novel, with the average frequency being around 4 times. I looked into the frequencies of names of main characters in the novel. Gatsby is the name that appears most often, followed by Tom, Daisy, and Nick. Originally, I was planning on examining sentences that these names appeared in to analyze the overal sentiment of that sentence. I thought this could tell us about the reputation and theme of the character. I decided this might be difficult though, since a sentence mentioning a name may not be representative of reputation/theme. For instance, a lot of the name occurrences may be in phrases like “Gatsby sad” or other verb phrases, which wouldn’t reveal anything insightful.</p>
+<p>I determined what the most frequent 10 words in the novel are: gatsby, said, tom, daisy, one, like, came, back, little, man. I also looked into the split of positive and negative words in the novel and found the top 10 frequent words in those lists. The most frequent positive words are: great, like, matter, hand, laugh, love, well, want, good, play. The most frequent negative words are: hard, miss, drop, broke, bad, shook, stop, demand, lost, kill.</p>
 </section>
 </section>
-<section id="analysis" class="level1">
-<h1>Analysis</h1>
-<p>I plan on analyzing the sentiment in each section of the book more deeply. I also plan on looking at the word frequencies to see if I can learn about the motifs/themes of the novel. I plan to make a few more plots to do with the presence of the positive/negative words in each section, the amount of times a character’s name is mentioned in each section, the sentiment of the opening sentence of each section, and the top words of the novel.</p>
+<section id="discussion" class="level2">
+<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<p>Based on the word frequencies and sentiment visualizations, we can draw conclusions about the themes/mood of the novel and the overall sentiment arc of the story based on its chapters. This is also reflective of the setting of the novel: the Roaring 20s in New York City. If we look at the most frequent words in the novel, there are three names: Gatsby, Daisy, and Tom. The novel famously contains a love triangle between these three characters, and the data aligns. Other than those names, some notable frequent words were “back”, “man”, and “one”. Although these words are definitely part of phrases that have significance, it is interesting that those single words appeared so much. <em>The Great Gatsby</em> is a story about Jay Gatsby, a man that came into money and had a haunting past. A common theme in the book is his longing for another character, Daisy. The word “one” frequently appearing could allude to the idea that Gatsby was always obsessed with the idea of Daisy being his “one” and him coming into so much money and ambition with the singular goal of catching just Daisy’s eye. The word “back” could allude to the themes of the past, present, and future that Fitzgerald wrote about in his novel. The book famously ends with the quote “So we beat on, boats against the current, borne back ceaselessly into the past.” The words “past” and “back” may refer to each other.</p>
+<p>Another interesting conclusion comes from the breakdown of the 10 most frequent positive words and 10 most frequent negative words in the book. Amongst the positive words are “great”, “love”, and “play” which I think are three words that perfectly describe the life of the wealthy during the Roaring 20s in America. Especially in the novel, wealthy characters like Gatsby and Daisy host and attend “great” lavish parties, “play” music, sports, and games, and spend their time chasing “love”. Amongst the negative words are “broke”, “kill”, and “miss”. During the 20s, the wealth gap was massive. Many families lived paycheck to paycheck and in worse parts of town, alluding to the word “broke”. In Gatsby, a character dies and another character is famously framed, hence the presence of “kill”. Lastly, the word “miss” refers to the theme of longing and absence Gatsby often felt about Daisy.</p>
+<p>The last visualizations I would like to discuss are the sentiment charts separated by chapters in the book. Chapter 7 has the most number of positive and negative words, with the balance being skewed very negative when looking at the normalized scores. This is the climax of the book and where (spoiler alert!) Myrtle is killed, so it makese sense that the sentiment is heavily negative. Chapter 1 is the only chapter where the normalized positive word score is higher than the negative score. I conclude that this is true because we are introduced to Gatsby and his lavish parties in this chapter, and so far, we have a positive view of his life. It is also interesting because in Chapter 7, the group drives through a rough part of town with folks of lower social classes, so its sentiment is far more negative to the pretty houses and lavish parties in Chapter 1 – a nicer portrayal of the 20s.</p>
+<p>Overall, this analysis aligned with my literary analysis from reading <em>The Great Gatsby</em>. It is interesting because when analyzing literary work, often one needs to read between the lines. However, when looking at the lines as raw data, we can draw similar conclusions. <em>The Great Gatsby</em> is a story about love, death, ambition, greatness, and the past/present/future, both between the lines and through the lines themselves.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
